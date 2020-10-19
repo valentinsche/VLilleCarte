@@ -25,8 +25,7 @@ struct MapUIView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Map(coordinateRegion: $region, annotationItems: vLilleData.) { (<#Identifiable#>) -> MapAnnotationProtocol in
-                    <#code#>
+                Map(coordinateRegion: $region, annotationItems: vLilleData.) { 
                 }
 //            List {
 //                ForEach(vLilleData.stations?.records ?? []) { station in
