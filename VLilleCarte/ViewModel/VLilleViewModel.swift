@@ -7,10 +7,19 @@
 //
 
 import Foundation
+import MapKit
+
+struct Pin: Identifiable {
+    var id = UUID()
+    var title: String?
+    var location: CLLocationCoordinate2D
+}
 
 class VLilleViewModel: ObservableObject {
     @Published var stations: VLilleData?
-    
+    @Published var records: [Record]?
+    @Published var pins: [Pin] = []
+
     init() {
         stations = nil
         
@@ -34,9 +43,12 @@ class VLilleViewModel: ObservableObject {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let response = try decoder.decode(VLilleData.self, from: data)
-                    print("toast")
                     DispatchQueue.main.async {
                         self.stations = response
+                        self.records = self.stations?.records
+                        response.records.forEach({ station in
+                            self.pins.append(Pin(id: UUID(), title: station.fields.nom, location: CLLocationCoordinate2D(latitude: station.geometry.coordinates[1], longitude: station.geometry.coordinates[0])))
+                        })
                     }
                 } catch {
                     print(error)
