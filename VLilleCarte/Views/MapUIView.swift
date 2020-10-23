@@ -9,13 +9,10 @@
 import SwiftUI
 import MapKit
 
-struct City: Identifiable {
-    let id = UUID()
-    let coordinate: CLLocationCoordinate2D
-}
-
 struct MapUIView: View {
     @ObservedObject var vLilleData: VLilleViewModel
+    @State var selectedStation: Pin?
+    @State var showingStationDetail = false
     
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -30,32 +27,15 @@ struct MapUIView: View {
     
     var body: some View {
         VStack {
-            Map(coordinateRegion: $region, annotationItems: vLilleData.pins) { city in
-                MapPin(coordinate: city.location, tint: .green)
-                
-            }
-            //            Map(coordinateRegion: $region, annotationItems: vLilleData.pins) { city in
-            //                MapAnnotation(
-            //                    coordinate: city.location,
-            //                    anchorPoint: CGPoint(x: 0.5, y: 0.5)
-            //                ) {
-            //                    Perform {  debugPrint("This is a toast", city) }
-            //                }
-            //            }
-            //                Map(coordinateRegion: $region, annotationItems: vLilleData.pins ?? [], annotationContent: { pin in
-            //                    MapMarker(coordinate: CLLocationCoordinate2D(latitude: 50.6333, longitude: 3.0667), tint: .green)
-            //                })
-            
-        }        
+            MapView(vLilleData: vLilleData)
+        }
+        .edgesIgnoringSafeArea(.all)
         .navigationBarItems(trailing:
-                                
                                 Button("toast", action: {
                                     vLilleData.fetchVLilleData()
                                 }))
-        
-        
-        
     }
+    
 }
 
 extension View {
@@ -64,3 +44,24 @@ extension View {
         return EmptyView()
     }
 }
+
+
+
+//            Map(coordinateRegion: $region,
+//                interactionModes: MapInteractionModes.all,
+//                showsUserLocation: true,
+//                userTrackingMode: $userTrackingMode,
+//                annotationItems: vLilleData.pins) { city in
+//                MapAnnotation(coordinate: city.location) {
+//                Image(systemName: "refresh")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 100, height: 25)
+//                            .clipShape(Circle())
+//                            .overlay(
+//                                Circle().stroke(Color.white, lineWidth: 25/10))
+//                            .shadow(radius: 10)
+//                    .onTapGesture {
+//                        print("city")
+//                    }
+//                }
