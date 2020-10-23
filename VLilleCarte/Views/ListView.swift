@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ListView: View {
     @ObservedObject private(set) var vLilleData: VLilleViewModel
@@ -25,27 +26,43 @@ struct ListView: View {
 
 struct StationView: View {
     @State private(set) var station: Record
+    @State private(set) var currentLocation: CLLocation?
     
     var body: some View {
         VStack {
             HStack {
-                Text(station.fields.nom)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(station.fields.nom)
+                    Text(station.fields.type.rawValue)
+                }
                 Spacer()
                 VStack(spacing: 5) {
                     Text("\(station.fields.nbvelosdispo)")
                         .frame(maxWidth: 64, alignment: .center)
-                        .background(station.fields.nbvelosdispo > 0 ? Color.green : Color.red)
+                        .background(returnColorForAvailableQuantity(for: station.fields.nbvelosdispo))
                         .foregroundColor(Color.white)
                         .cornerRadius(12)
                     Text("\(station.fields.nbplacesdispo)")
                         .frame(maxWidth: 64, alignment: .center)
-                        .background(station.fields.nbplacesdispo > 0 ? Color.green : Color.red)
+                        .background(returnColorForAvailableQuantity(for: station.fields.nbplacesdispo))
                         .foregroundColor(Color.white)
                         .cornerRadius(12)
-
+                    
                 }
             }
         }
         .frame(minHeight: 64)
     }
+    
+    private func returnColorForAvailableQuantity(for quantity: Int) -> Color {
+        if quantity > 5 {
+            return .green
+        } else if quantity < 5 && quantity > 0 {
+            return .orange
+        } else {
+            return .red
+        }
+    }
 }
+
+

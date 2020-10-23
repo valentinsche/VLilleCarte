@@ -27,15 +27,7 @@ struct MapView: UIViewRepresentable {
             longitudeDelta: 0.25
         )
     )
-    
-    var locationManager = CLLocationManager()
-    
-    func setupManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
-    }
-    
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
         
@@ -46,7 +38,7 @@ struct MapView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
-        setupManager()
+        vLilleData.setupManager()
         
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow

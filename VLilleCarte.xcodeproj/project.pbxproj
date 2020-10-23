@@ -93,8 +93,8 @@
 		9DD0F945250FD1FF0095197A /* VLilleCarte */ = {
 			isa = PBXGroup;
 			children = (
-				9D1ABAC42529BF6200EE1AA1 /* ViewModel */,
 				9D1ABAC32529BF5C00EE1AA1 /* Model */,
+				9D1ABAC42529BF6200EE1AA1 /* ViewModel */,
 				9DCCEC8B251144F8005A6425 /* Views */,
 				9DD0F946250FD1FF0095197A /* AppDelegate.swift */,
 				9DD0F948250FD1FF0095197A /* SceneDelegate.swift */,

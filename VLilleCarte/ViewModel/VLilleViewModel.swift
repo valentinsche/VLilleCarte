@@ -25,11 +25,30 @@ class VLilleViewModel: ObservableObject {
     @Published private var stations: VLilleData?
     @Published var records: [Record]?
     @Published var pins: [Pin] = []
+    @Published var currentLocation: CLLocation?
     
+    var locationManager = CLLocationManager()
+
     init() {
         stations = nil
         
+        setupManager()
         fetchVLilleData()
+    }
+    
+    
+    func setupManager() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+
+          currentLocation = locationManager.location
+
+        }
+
     }
     
     func fetchVLilleData() {
