@@ -26,9 +26,9 @@ class VLilleViewModel: ObservableObject {
     @Published var records: [Record]?
     @Published var pins: [Pin] = []
     @Published var currentLocation: CLLocation?
+    @Published var locationManager = LocationFetcher()
+    @Published var filteredRecords: [Record]?
     
-    var locationManager = CLLocationManager()
-
     init() {
         stations = nil
         
@@ -38,17 +38,7 @@ class VLilleViewModel: ObservableObject {
     
     
     func setupManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestAlwaysAuthorization()
-        
-        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
-
-          currentLocation = locationManager.location
-
-        }
-
+        locationManager.start()
     }
     
     func fetchVLilleData() {
@@ -73,6 +63,7 @@ class VLilleViewModel: ObservableObject {
                         response.records.forEach({ station in
                             self.pins.append(Pin(title: station.fields.nom, subtitle: "dispo: \(station.fields.nbvelosdispo) places dispo: \(station.fields.nbplacesdispo)", coordinate: CLLocationCoordinate2D(latitude: station.geometry.coordinates[1], longitude: station.geometry.coordinates[0])))
                         })
+                        self.filteredRecords = self.records?.sorted(by: self.locationManager.lastKnownLocationCLLocation!)
                     }
                 } catch {
                     print(error)
@@ -132,3 +123,4 @@ private extension HouseAnnotationView {
         canShowCallout = true
     }
 }
+

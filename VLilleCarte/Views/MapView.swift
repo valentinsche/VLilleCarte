@@ -32,7 +32,6 @@ struct MapView: UIViewRepresentable {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
         
         annotationView.canShowCallout = false
-        annotationView.subtitleVisibility = .adaptive
         return annotationView
     }
     

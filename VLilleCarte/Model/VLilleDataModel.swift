@@ -6,6 +6,7 @@
 //  Copyright © 2020 Valentin Scheldeman. All rights reserved.
 //
 import Foundation
+import CoreLocation
 
 // MARK: - VLilleData
 struct VLilleData: Codable, Identifiable {
@@ -57,6 +58,18 @@ struct Record: Codable, Identifiable {
         case recordid = "recordid"
         case fields = "fields"
         case geometry = "geometry"
+    }
+    
+    var pin: [Pin] {
+        return [Pin(title: fields.nom, subtitle: "", coordinate: CLLocationCoordinate2D(latitude: geometry.coordinates[1], longitude: geometry.coordinates[0]))]
+    }
+    
+    var location: CLLocation {
+        return CLLocation(latitude: geometry.coordinates[1], longitude: geometry.coordinates[0])
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        return location.distance(from: self.location)
     }
 }
 
@@ -121,4 +134,17 @@ struct Geometry: Codable {
 
 enum GeometryType: String, Codable {
     case point = "Point"
+}
+
+// https://stackoverflow.com/a/52513266/5358092
+
+extension Array where Element == Record {
+
+    mutating func sort(by location: CLLocation) {
+         return sort(by: { $0.distance(to: location) < $1.distance(to: location) })
+    }
+
+    func sorted(by location: CLLocation) -> [Record] {
+        return sorted(by: { $0.distance(to: location) < $1.distance(to: location) })
+    }
 }

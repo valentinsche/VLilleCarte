@@ -7,23 +7,54 @@
 //
 
 import SwiftUI
+//
+//struct ContentView: View {
+//    @ObservedObject private(set) var vLilleViewModel = VLilleViewModel()
+//
+//    var body: some View {
+//        TabView {
+//
+//            MapUIView(vLilleData: vLilleViewModel)
+//                .tabItem {
+//                    Image(systemName: "tv.fill")
+//                    Text("Carte")
+//                }
+//            ListView(vLilleData: vLilleViewModel)
+//                .tabItem {
+//                    Image(systemName: "tv.fill")
+//                    Text("Liste")
+//                }
+//        }
+//    }
+//}
 
 struct ContentView: View {
     @ObservedObject private(set) var vLilleViewModel = VLilleViewModel()
+    @State var selected = 0
     
     var body: some View {
-        TabView {
+        
+        ZStack(alignment: .bottom) {
+            VStack{
+                if self.selected == 0 {
+                    GeometryReader{_ in
+                        
+                        MapUIView(vLilleData: vLilleViewModel)
+                    }
+                }
+                else if self.selected == 1 {
+                    GeometryReader{_ in
+                        ListView(vLilleData: vLilleViewModel)
+                    }
+                }
+                else {
+                    GeometryReader{_ in
+                        Text("Cart").foregroundColor(.black)
+                    }
+                }
+            }.background(Color(.systemBackground).edgesIgnoringSafeArea(.all))
             
-            MapUIView(vLilleData: vLilleViewModel)
-                .tabItem {
-                    Image(systemName: "tv.fill")
-                    Text("Carte")
-                }
-            ListView(vLilleData: vLilleViewModel)
-                .tabItem {
-                    Image(systemName: "tv.fill")
-                    Text("Liste")
-                }
+            FloatingTabbar(selected: self.$selected)
         }
     }
 }
@@ -31,5 +62,54 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct FloatingTabbar : View {
+    @Binding var selected : Int
+    @State var expand = true
+    
+    var body : some View {
+        HStack{
+            Spacer(minLength: 0)
+            HStack {
+                if !self.expand {
+                    Button(action: {
+                        self.expand.toggle()
+                    }) {
+                        Image("worldwide").foregroundColor(.black).padding()
+                    }
+                }
+                else {
+                    Button(action: {
+                        self.selected = 0
+                    }) {
+                        Image(systemName: "map.fill").foregroundColor(self.selected == 0 ? .beautifulPink : .gray).padding(.horizontal).font(.title)
+                    }
+                    Spacer(minLength: 15)
+                    Button(action: {
+                        self.selected = 1
+                    }) {
+                        Image(systemName: "text.justify").foregroundColor(self.selected == 1 ? .beautifulPink : .gray).padding(.horizontal).font(.title3)
+                    }
+                    Spacer(minLength: 15)
+                    Button(action: {
+                        self.selected = 2
+                    }) {
+                        Image(systemName: "wrench.fill").foregroundColor(self.selected == 2 ? .beautifulPink : .gray).padding(.horizontal).font(.title3)
+                    }
+                }
+            }
+            .padding(.vertical,self.expand ? 20 : 8)
+            .padding(.horizontal,self.expand ? 35 : 8)
+            .background(Color.veryGrayWhite)
+            .clipShape(Capsule())
+            .padding(22)
+            .onLongPressGesture {
+                
+                self.expand.toggle()
+            }
+            .animation(.interactiveSpring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.6))
+        }
     }
 }
