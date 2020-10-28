@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E24C9C92549B6EB00DEDFDE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E24C9C82549B6EB00DEDFDE /* SettingsView.swift */; };
 		1E2DC2CB254812E8006F6971 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2DC2CA254812E8006F6971 /* LocationFetcher.swift */; };
 		1E2DC2CF25481D9E006F6971 /* CLLocationCoordinate2DExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2DC2CE25481D9E006F6971 /* CLLocationCoordinate2DExtension.swift */; };
 		1E2DC2D425486629006F6971 /* StationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2DC2D325486629006F6971 /* StationDetailView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E24C9C82549B6EB00DEDFDE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1E2DC2CA254812E8006F6971 /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		1E2DC2CE25481D9E006F6971 /* CLLocationCoordinate2DExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2DExtension.swift; sourceTree = "<group>"; };
 		1E2DC2D325486629006F6971 /* StationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				1EB61B432542D88B00DD8829 /* MapView.swift */,
 				1EEA9AE02542F85800AD3F6B /* ListView.swift */,
 				1E2DC2D325486629006F6971 /* StationDetailView.swift */,
+				1E24C9C82549B6EB00DEDFDE /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				9DD0F949250FD1FF0095197A /* SceneDelegate.swift in Sources */,
 				1E2DC2D425486629006F6971 /* StationDetailView.swift in Sources */,
 				9D4D0AE4253AFABD0090B280 /* VLilleViewModel.swift in Sources */,
+				1E24C9C92549B6EB00DEDFDE /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

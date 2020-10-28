@@ -29,9 +29,13 @@ struct MapView: UIViewRepresentable {
     )
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        let identifier = "Stationmark"
         
-        annotationView.canShowCallout = false
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+
         return annotationView
     }
     

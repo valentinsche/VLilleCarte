@@ -7,26 +7,6 @@
 //
 
 import SwiftUI
-//
-//struct ContentView: View {
-//    @ObservedObject private(set) var vLilleViewModel = VLilleViewModel()
-//
-//    var body: some View {
-//        TabView {
-//
-//            MapUIView(vLilleData: vLilleViewModel)
-//                .tabItem {
-//                    Image(systemName: "tv.fill")
-//                    Text("Carte")
-//                }
-//            ListView(vLilleData: vLilleViewModel)
-//                .tabItem {
-//                    Image(systemName: "tv.fill")
-//                    Text("Liste")
-//                }
-//        }
-//    }
-//}
 
 struct ContentView: View {
     @ObservedObject private(set) var vLilleViewModel = VLilleViewModel()
@@ -49,7 +29,7 @@ struct ContentView: View {
                 }
                 else {
                     GeometryReader{_ in
-                        Text("Cart").foregroundColor(.black)
+                        SettingsView()
                     }
                 }
             }.background(Color(.systemBackground).edgesIgnoringSafeArea(.all))

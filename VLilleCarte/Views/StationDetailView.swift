@@ -24,10 +24,22 @@ struct StationDetailView: View {
     
     var body: some View {
         VStack {
-            Color(.red)
+            ZStack {
+            Map(coordinateRegion: $region)
                 .frame(width: .infinity, height: 200, alignment: .center)
+                .disabled(true)
+                .onAppear(perform: {
+                    region.center = CLLocationCoordinate2D(latitude: station.location.coordinate.latitude, longitude: station.location.coordinate.longitude)
+                    region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+                    
+                })
+                Image("pin")
+                    .resizable()
+                    .frame(width: 48, height: 48, alignment: .center)
+                    .foregroundColor(Color.beautifulPink)
+            }
             Text(station.fields.adresse)
-                .padding(.bottom, 50)
+                .padding(.all, 50)
                 .font(.title2)
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
@@ -42,7 +54,7 @@ struct StationDetailView: View {
                     }
                 }
                 .padding(.leading, 15)
-
+                
                 Spacer()
                 VStack(spacing: 5) {
                     Text("\(station.fields.nbvelosdispo) vélos")
@@ -60,7 +72,7 @@ struct StationDetailView: View {
             }
             Spacer(minLength: 50)
             Button("Lancer un itinéraire") {
-                let url = URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(10),\(10)")
+                let url = URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(station.location.coordinate.latitude),\(station.location.coordinate.longitude)")
                 UIApplication.shared.open(url!)
             }
             .frame(width: 200, height: 54, alignment: .center)

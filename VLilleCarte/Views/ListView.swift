@@ -73,7 +73,7 @@ struct StationView: View {
 
 extension View {
     func returnColorForAvailableQuantity(for quantity: Int) -> Color {
-        if quantity > 5 {
+        if quantity >=  5 {
             return .green
         } else if quantity < 5 && quantity > 0 {
             return .orange
