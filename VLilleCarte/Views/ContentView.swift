@@ -19,7 +19,7 @@ struct ContentView: View {
                 if self.selected == 0 {
                     GeometryReader{_ in
                         
-                        MapUIView(vLilleData: vLilleViewModel)
+                        MapUIView(vLilleData: vLilleViewModel, selectedStation: nil)
                     }
                 }
                 else if self.selected == 1 {

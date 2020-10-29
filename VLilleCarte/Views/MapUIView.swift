@@ -11,8 +11,9 @@ import MapKit
 
 struct MapUIView: View {
     @ObservedObject var vLilleData: VLilleViewModel
-    @State var selectedStation: Pin?
+    @State var selectedStation: Record?
     @State var showingStationDetail = false
+    @State var showingStationDetailView = false
     
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -27,13 +28,20 @@ struct MapUIView: View {
     
     var body: some View {
         VStack {
-            MapView(vLilleData: vLilleData)
+            MapView(vLilleData: vLilleData, selectedStation: $selectedStation, showingStationDetail: $showingStationDetail, showingStationDetailView: $showingStationDetailView)
         }
         .edgesIgnoringSafeArea(.all)
         .navigationBarItems(trailing:
                                 Button("toast", action: {
                                     vLilleData.fetchVLilleData()
                                 }))
+        .sheet(isPresented: $showingStationDetailView) {
+            Text("yolo")
+        }
+        //        .alert(isPresented: $showingStationDetail, content: {
+        //            Alert(title: Text("Important message"), message: Text("Wear sunscreen"), dismissButton: .default(Text("Got it!")))
+        //        })
+        
     }
     
 }
