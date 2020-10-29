@@ -28,6 +28,7 @@ class VLilleViewModel: ObservableObject {
     @Published var currentLocation: CLLocation?
     @Published var locationManager = LocationFetcher()
     @Published var filteredRecords: [Record]?
+    @Published var selectedStation: Record?
     
     init() {
         stations = nil

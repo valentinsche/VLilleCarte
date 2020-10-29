@@ -11,7 +11,7 @@ import MapKit
 
 struct MapUIView: View {
     @ObservedObject var vLilleData: VLilleViewModel
-    @State var selectedStation: Record?
+    @State var selectedStation: Record? = nil
     @State var showingStationDetail = false
     @State var showingStationDetailView = false
     
@@ -36,7 +36,9 @@ struct MapUIView: View {
                                     vLilleData.fetchVLilleData()
                                 }))
         .sheet(isPresented: $showingStationDetailView) {
-            Text("yolo")
+            if let data = vLilleData.selectedStation {
+                StationDetailView(station: data)
+            }
         }
         //        .alert(isPresented: $showingStationDetail, content: {
         //            Alert(title: Text("Important message"), message: Text("Wear sunscreen"), dismissButton: .default(Text("Got it!")))

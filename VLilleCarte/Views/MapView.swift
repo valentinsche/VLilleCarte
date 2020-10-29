@@ -25,6 +25,7 @@ struct MapView: UIViewRepresentable {
     @Binding var selectedStation: Record?
     @Binding var showingStationDetail: Bool
     @Binding var showingStationDetailView: Bool
+    
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
@@ -52,7 +53,6 @@ struct MapView: UIViewRepresentable {
             self.parent = parent
         }
         
-        
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             let identifier = "Placemark"
             
@@ -74,7 +74,13 @@ struct MapView: UIViewRepresentable {
             
             let selectedPin = parent.vLilleData.records?.filter({ $0.fields.nom == view.annotation?.title })
             
-            self.parent.selectedStation = selectedPin?.first
+            if let selected = selectedPin?.first {
+                parent.selectedStation = selected
+                parent.vLilleData.selectedStation = selected
+                if self.parent.selectedStation != nil {
+                parent.showingStationDetailView = true
+                }
+            }
         }
     }
 }
