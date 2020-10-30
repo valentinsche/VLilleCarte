@@ -15,10 +15,9 @@ struct ContentView: View {
     var body: some View {
         
         ZStack(alignment: .bottom) {
-            VStack{
+            VStack {
                 if self.selected == 0 {
-                    GeometryReader{_ in
-                        
+                    GeometryReader {_ in
                         MapUIView(vLilleData: vLilleViewModel, selectedStation: nil)
                     }
                 }
@@ -45,11 +44,11 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct FloatingTabbar : View {
-    @Binding var selected : Int
+struct FloatingTabbar: View {
+    @Binding var selected: Int
     @State var expand = true
     
-    var body : some View {
+    var body: some View {
         HStack{
             Spacer(minLength: 0)
             HStack {

@@ -62,9 +62,9 @@ class VLilleViewModel: ObservableObject {
                         self.stations = response
                         self.records = self.stations?.records
                         response.records.forEach({ station in
-                            self.pins.append(Pin(title: station.fields.nom, subtitle: "dispo: \(station.fields.nbvelosdispo) places dispo: \(station.fields.nbplacesdispo)", coordinate: CLLocationCoordinate2D(latitude: station.geometry.coordinates[1], longitude: station.geometry.coordinates[0])))
+                            self.pins.append(Pin(title: station.fields.nom, subtitle: "vélo dispo: \(station.fields.nbvelosdispo) places dispo: \(station.fields.nbplacesdispo)", coordinate: CLLocationCoordinate2D(latitude: station.geometry.coordinates[1], longitude: station.geometry.coordinates[0])))
                         })
-                        self.filteredRecords = self.records?.sorted(by: self.locationManager.lastKnownLocationCLLocation!)
+                        self.filteredRecords = self.records?.sorted(by: self.locationManager.lastKnownLocationCLLocation ?? CLLocation(latitude: 50.6333, longitude: 3.0667))
                     }
                 } catch {
                     print(error)

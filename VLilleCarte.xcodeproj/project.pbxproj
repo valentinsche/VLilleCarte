@@ -60,6 +60,8 @@
 		1E2DC2C9254812C3006F6971 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1ED2F98F2547103D00B0F10B /* ColorExtension.swift */,
+				1E2DC2CE25481D9E006F6971 /* CLLocationCoordinate2DExtension.swift */,
 				1E2DC2CA254812E8006F6971 /* LocationFetcher.swift */,
 			);
 			path = Utils;
@@ -117,8 +119,6 @@
 				9D1ABAC42529BF6200EE1AA1 /* ViewModel */,
 				9DCCEC8B251144F8005A6425 /* Views */,
 				1E2DC2C9254812C3006F6971 /* Utils */,
-				1ED2F98F2547103D00B0F10B /* ColorExtension.swift */,
-				1E2DC2CE25481D9E006F6971 /* CLLocationCoordinate2DExtension.swift */,
 				9DD0F946250FD1FF0095197A /* AppDelegate.swift */,
 				9DD0F948250FD1FF0095197A /* SceneDelegate.swift */,
 				9DD0F94C250FD2030095197A /* Assets.xcassets */,

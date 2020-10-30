@@ -12,6 +12,9 @@ import MapKit
 struct ListView: View {
     @ObservedObject private(set) var vLilleData: VLilleViewModel
     
+    /* Solution pour le problème d'image dans la navigationBar qui ne suit pas le largeTitle  https://www.hackingwithswift.com/forums/swiftui/icons-in-navigationview-title-apple-messages-style/592
+     */
+    
     var body: some View {
         NavigationView {
             List {
@@ -22,6 +25,14 @@ struct ListView: View {
                 }
             }
             .navigationTitle("Liste des stations")
+            .navigationBarItems(trailing:
+                                    Button(action: {
+                                        vLilleData.fetchVLilleData()
+                                    }) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .foregroundColor(.beautifulPink)
+                                            .font(.title2)
+                                    })
         }
     }
 }
@@ -67,8 +78,6 @@ struct StationView: View {
         }
         .frame(minHeight: 64)
     }
-    
-    
 }
 
 extension View {

@@ -27,25 +27,26 @@ struct MapUIView: View {
     )
     
     var body: some View {
-        VStack {
-            MapView(vLilleData: vLilleData, selectedStation: $selectedStation, showingStationDetail: $showingStationDetail, showingStationDetailView: $showingStationDetailView)
-        }
-        .edgesIgnoringSafeArea(.all)
-        .navigationBarItems(trailing:
-                                Button("toast", action: {
-                                    vLilleData.fetchVLilleData()
-                                }))
-        .sheet(isPresented: $showingStationDetailView) {
-            if let data = vLilleData.selectedStation {
-                StationDetailView(station: data)
+        NavigationView {
+            VStack {
+                MapView(vLilleData: vLilleData, selectedStation: $selectedStation, showingStationDetail: $showingStationDetail, showingStationDetailView: $showingStationDetailView)
+            }
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarItems(trailing:
+                                    Button(action: {
+                                        vLilleData.fetchVLilleData()
+                                    }) {
+                                        Image(systemName: "arrow.clockwise")
+                                            .foregroundColor(.white)
+                                            .font(.title2)
+                                    })
+            .sheet(isPresented: $showingStationDetailView) {
+                if let data = vLilleData.selectedStation {
+                    StationDetailView(station: data)
+                }
             }
         }
-        //        .alert(isPresented: $showingStationDetail, content: {
-        //            Alert(title: Text("Important message"), message: Text("Wear sunscreen"), dismissButton: .default(Text("Got it!")))
-        //        })
-        
     }
-    
 }
 
 extension View {
@@ -54,24 +55,3 @@ extension View {
         return EmptyView()
     }
 }
-
-
-
-//            Map(coordinateRegion: $region,
-//                interactionModes: MapInteractionModes.all,
-//                showsUserLocation: true,
-//                userTrackingMode: $userTrackingMode,
-//                annotationItems: vLilleData.pins) { city in
-//                MapAnnotation(coordinate: city.location) {
-//                Image(systemName: "refresh")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 100, height: 25)
-//                            .clipShape(Circle())
-//                            .overlay(
-//                                Circle().stroke(Color.white, lineWidth: 25/10))
-//                            .shadow(radius: 10)
-//                    .onTapGesture {
-//                        print("city")
-//                    }
-//                }
