@@ -61,7 +61,7 @@ struct MapView: UIViewRepresentable {
 
             if annotationView == nil {
                 annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                
+
                 annotationView?.canShowCallout = true
                 annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             } else {

@@ -33,6 +33,7 @@ struct ListView: View {
                                             .foregroundColor(.beautifulPink)
                                             .font(.title2)
                                     })
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -43,7 +44,7 @@ struct StationView: View {
     @State private(set) var currentLocation: CLLocation?
     
     var body: some View {
-        VStack {
+        LazyVStack {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(station.fields.nom).font(.title3)

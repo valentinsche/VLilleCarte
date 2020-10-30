@@ -84,4 +84,3 @@ struct StationDetailView: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
-
