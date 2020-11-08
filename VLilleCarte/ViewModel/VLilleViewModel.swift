@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import StoreKit
 
 class Pin: NSObject, Identifiable, MKAnnotation {
     var title: String?
@@ -34,9 +35,19 @@ class VLilleViewModel: ObservableObject {
         stations = nil
         
         setupManager()
+        checkUserSettings()
         fetchVLilleData()
     }
     
+    private func checkUserSettings() {
+        if UserDefaults.standard.object(forKey: "ratingCode") != nil {
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        } else {
+            UserDefaults.standard.set("rating", forKey: "ratingCode")
+        }
+    }
     
     func setupManager() {
         locationManager.start()
@@ -104,7 +115,7 @@ private extension HouseAnnotationView {
             path.fill()
             
             let configuration = UIImage.SymbolConfiguration(pointSize: 24)
-            let house = UIImage(systemName: "house.fill", withConfiguration: configuration)!
+            let house = UIImage(systemName: "bicycle", withConfiguration: configuration)!
                 .withTintColor(.blue)
             house.draw(at: CGPoint(x: center.x - house.size.width / 2, y: center.y - house.size.height / 2))
         }
@@ -125,3 +136,42 @@ private extension HouseAnnotationView {
     }
 }
 
+final class LocationDataMapClusterView: MKAnnotationView {
+    
+    // MARK: Initialization
+    private let countLabel = UILabel()
+    
+    override var annotation: MKAnnotation? {
+        didSet {
+            guard let annotation = annotation as? MKClusterAnnotation else {
+                assertionFailure("Using LocationDataMapClusterView with wrong annotation type")
+                return
+            }
+            
+            countLabel.text = annotation.memberAnnotations.count < 100 ? "\(annotation.memberAnnotations.count)" : "99+"
+        }
+    }
+    
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        
+        displayPriority = .defaultHigh
+        collisionMode = .circle
+        
+        frame = CGRect(x: 0, y: 0, width: 40, height: 50)
+        centerOffset = CGPoint(x: 0, y: -frame.size.height / 2)
+        
+        
+        setupUI()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Setup
+    private func setupUI() {
+        
+    }
+}

@@ -7,25 +7,43 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SettingsView: View {
+    @ObservedObject var userSettings = UserSettings()
+    
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    Text("toasty")
+                Section(header: Text("Code provisoire")) {
+                    TextField("Code provisoire", text: $userSettings.temporaryCode)
+                    
                 }
-                Section {
-                    Text("ok ok ")
+                Section(header: Text("Signaler un problème sur l'application")) {
+                    Button("vLille@gmail.Com") {
+                        print("toasty")
+                    }
                 }
             }
+            .navigationTitle("Paramètres")
         }
-        .navigationTitle("Settings")
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+    }
+}
+
+class UserSettings: ObservableObject {
+    @Published var temporaryCode: String {
+        didSet {
+            UserDefaults.standard.set(temporaryCode, forKey: "temporaryCode")
+        }
+    }
+    
+    init() {
+        self.temporaryCode = UserDefaults.standard.object(forKey: "temporaryCode") as? String ?? ""
     }
 }

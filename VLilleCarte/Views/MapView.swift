@@ -32,6 +32,8 @@ struct MapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.region = centerCoordinate
         mapView.mapType = .satelliteFlyover
+        mapView.showsUserLocation = true
+        mapView.register(HouseAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         
         return mapView
     }
@@ -58,10 +60,11 @@ struct MapView: UIViewRepresentable {
             let identifier = "Placemark"
             
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-
+            
             if annotationView == nil {
                 annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-
+                //                annotationView = HouseAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                
                 annotationView?.canShowCallout = true
                 annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             } else {
@@ -69,17 +72,17 @@ struct MapView: UIViewRepresentable {
             }
             
             return annotationView
+            
         }
         
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-            
             let selectedPin = parent.vLilleData.records?.filter({ $0.fields.nom == view.annotation?.title })
             
             if let selected = selectedPin?.first {
                 parent.selectedStation = selected
                 parent.vLilleData.selectedStation = selected
                 if self.parent.selectedStation != nil {
-                parent.showingStationDetailView = true
+                    parent.showingStationDetailView = true
                 }
             }
         }
