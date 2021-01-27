@@ -9,18 +9,20 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var userSettings = UserSettings()
+    
     var body: some View {
         NavigationView {
             Form {
-                Section {
-                    Text("toasty")
+                Section(header: Text("Code vélo").font(.headline)) {
+                    TextField("Entrez votre code", text: $userSettings.accesscode)
                 }
-                Section {
+                Section(header: Text("Contacts").font(.headline)) {
                     Text("ok ok ")
                 }
             }
+            .navigationTitle("Paramètres")
         }
-        .navigationTitle("Settings")
     }
 }
 
